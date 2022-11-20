@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: gateway-service
+
+logging:
+  level:
+    com.netflix.discovery: 'OFF'
+    org.springframework.cloud: 'OFF'
+
+server:
+  port: 8080
+
+discovery:
+  eureka-hostname: http://eureka:eureka@localhost:8761/eureka
+  client-hostname: gateway-service
+
+eureka:
+  instance:
+    hostname: ${discovery.client-hostname}
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.hostname}:${server.port}
+    leaseRenewalIntervalInSeconds: 10
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registryFetchIntervalSeconds: 5
+    service-url:
+      defaultZone: ${discovery.eureka-hostname}
